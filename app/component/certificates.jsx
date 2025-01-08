@@ -6,47 +6,39 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 
-// Import certificate images
 import LLM from '@/app/Asets/LLM.jpg'
 import AWS from '@/app/Asets/AWS.jpg'
 import NLP from '@/app/Asets/NLP.jpg'
 
-interface Certificate {
-  title: string;
-  issuer: string;
-  date: string;
-  description: string;
-  image: string; // Using 'any' type for imported images
-}
-
-const certificates: Certificate[] = [
-  {
-    title: 'Large language models',
-    issuer: 'Google-Cloud',
-    date: 'December 2024',
-    description: 'developing and integrating applications with Large Language Models (LLMs) and other enterprise services.',
-    image: LLM
-  },
-  {
-    title: 'AWS Certified technical essentials',
-    issuer: 'Amazon Web Services',
-    date: 'January 2025',
-    description: 'Expertise in essential of AWS services and common solutions.',
-    image: AWS
-  },
-  {
-    title: 'Natural language processing',
-    issuer: 'simplilearn',
-    date: 'December 2024',
-    description: 'Proficiency in building and training neural networks using NLP.',
-    image: NLP
-  }
-]
+const certificates = [
+    {
+      title: 'Large language models',
+      issuer: 'Google-Cloud',
+      date: 'December 2024',
+      description: 'developing and integrating applications with Large Language Models (LLMs) and other enterprise services.',
+      image: LLM
+    },
+    {
+      title: 'AWS Certified technical essentials',
+      issuer: 'Amazon Web Services',
+      date: 'January 2025',
+      description: 'Expertise in essential of AWS services and common solutions.',
+      image: AWS
+    },
+    {
+      title: 'Natural language processing',
+      issuer: 'simplilearn',
+      date: 'December 2024',
+      description: 'Proficiency in building and training neural networks using NLP.',
+      image: NLP
+    }
+  ]
+  
 
 export default function Certificates() {
-  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null)
+  const [selectedCertificate, setSelectedCertificate] = useState(null)
 
-  const openCertificate = (cert: Certificate) => {
+  const openCertificate = (cert) => {
     setSelectedCertificate(cert)
   }
 
