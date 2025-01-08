@@ -2,9 +2,9 @@ import Header from './component/header'
 import Hero from './component/hero'
 import Skills from './component/skills'
 import Projects from './component/projects'
-import Experience from './component/experience'
+
 import Certificates from './component/certificates'
-import Contact from './component/contact'
+
 import Footer from './component/footer'
 
 export default function Home() {

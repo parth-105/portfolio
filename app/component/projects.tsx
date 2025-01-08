@@ -38,7 +38,7 @@ export default function Projects() {
         <h2 className="text-3xl font-bold mb-8 text-center">Featured Projects</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div className="group">
+            <div key={index} className="group">
             <Card key={index} className="bg-card h-[450px] border-border transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 dark:hover:shadow-purple-500/40 hover:-translate-y-1 dark:hover:bg-gray-800">
             <a href={project.link} target="_blank">
               <CardHeader>

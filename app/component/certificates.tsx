@@ -16,7 +16,7 @@ interface Certificate {
   issuer: string;
   date: string;
   description: string;
-  image: any; // Using 'any' type for imported images
+  image: string; // Using 'any' type for imported images
 }
 
 const certificates: Certificate[] = [
