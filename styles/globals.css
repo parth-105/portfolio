@@ -58,7 +58,253 @@
   }
 }
 
+/* Light mode text visibility - black text */
+:root .text-muted-foreground {
+  color: hsl(222.2 47.4% 25%);
+}
+
+:root .text-foreground {
+  color: hsl(0 0% 0%);
+}
+
+:root .text-card-foreground {
+  color: hsl(0 0% 0%);
+}
+
+/* Dark mode text visibility - white text */
+.dark .text-muted-foreground {
+  color: hsl(210 40% 85%);
+}
+
+.dark .text-foreground {
+  color: hsl(0 0% 100%);
+}
+
+.dark .text-card-foreground {
+  color: hsl(0 0% 100%);
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+/* Starfall Portfolio Landing Component Styles */
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--ring)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--ring)), hsl(var(--primary)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--border));
+  transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: hsl(var(--primary));
+}
+
+/* Light mode glass button - black text */
+:root .glass-button {
+  color: hsl(0 0% 0%);
+}
+
+:root .glass-button:hover {
+  color: hsl(0 0% 0%);
+}
+
+/* Dark mode glass button - white text */
+.dark .glass-button {
+  color: hsl(0 0% 100%);
+}
+
+.dark .glass-button:hover {
+  color: hsl(0 0% 100%);
+}
+
+.primary-button {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transition: all 0.3s ease;
+}
+
+.primary-button:hover {
+  background: hsl(var(--primary) / 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--border));
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: hsl(var(--primary));
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dark .glass-card {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.dark .glass-card:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.project-image {
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-image img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(1) contrast(1);
+}
+
+.glass-card:hover .project-image img {
+  transform: scale(1.05);
+  filter: brightness(1.1) contrast(1.05);
+}
+
+.skill-badge {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  background-clip: padding-box;
+}
+
+.skill-badge::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.3) 0%, 
+    rgba(255, 255, 255, 0.1) 25%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.1) 75%,
+    rgba(255, 255, 255, 0.25) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.skill-badge:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2), 
+    0 0 20px hsl(var(--primary) / 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.skill-badge:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg, 
+    hsl(var(--primary) / 0.6) 0%, 
+    hsl(var(--primary) / 0.4) 25%,
+    hsl(var(--primary) / 0.3) 50%,
+    hsl(var(--primary) / 0.4) 75%,
+    hsl(var(--primary) / 0.5) 100%);
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.4);
+}
+
+.dark .skill-badge {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .skill-badge::before {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.15) 0%, 
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(255, 255, 255, 0.12) 100%);
+  opacity: 0.7;
+}
+
+.dark .skill-badge:hover {
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.4), 
+    0 0 20px hsl(var(--primary) / 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.dark .skill-badge:hover::before {
+  background: linear-gradient(135deg, 
+    hsl(var(--primary) / 0.7) 0%, 
+    hsl(var(--primary) / 0.5) 25%,
+    hsl(var(--primary) / 0.4) 50%,
+    hsl(var(--primary) / 0.5) 75%,
+    hsl(var(--primary) / 0.6) 100%);
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, hsl(var(--border)), transparent);
+  margin: 0 auto;
+  max-width: 90%;
+}
+
+.geist-font {
+  font-family: var(--font-geist-sans, system-ui, sans-serif);
+}
+
+.inter-font {
+  font-family: var(--font-inter, system-ui, sans-serif);
+}
+
+.glass-dialog {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .glass-dialog {
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(20px) !important;
 }
 
