@@ -158,11 +158,11 @@ const defaultData = {
 
   navLinks: [ { label: 'About', href: '#about' }, { label: 'Projects', href: '#projects' }, { label: 'Skills', href: '#skills' } ],
 
-  resume: { label: 'Resume' },
+  resume: { label: 'Resume', onClick: undefined },
 
   hero: { titleLine1: 'Creative Developer &', titleLine2Gradient: 'Digital Designer', subtitle: 'I craft beautiful digital experiences through code and design. Specializing in modern web development, UI/UX design, and bringing innovative ideas to life.', },
 
-  ctaButtons: { primary: { label: 'View My Work' }, secondary: { label: 'Get In Touch' }, },
+  ctaButtons: { primary: { label: 'View My Work', onClick: undefined }, secondary: { label: 'Get In Touch', onClick: undefined }, },
 
   projects: [ { title: 'FinTech Mobile App', description: 'React Native app with AI-powered financial insights.', tags: ['React Native', 'Node.js'] }, { title: 'Data Visualization Platform', description: 'Interactive dashboard for complex data analysis.', tags: ['D3.js', 'Python'] }, { title: '3D Portfolio Site', description: 'Immersive WebGL experience with 3D elements.', tags: ['Three.js', 'WebGL'] }, ],
 
@@ -241,7 +241,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                 </div>
 
                 <div className="flex items-center gap-3">
-                    {mounted && (
+                    {mounted && setTheme && (
                         <button
                             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                             className="glass-button p-2 rounded-lg text-foreground transition-all duration-300 hover:scale-110 relative w-9 h-9 flex items-center justify-center"
@@ -251,7 +251,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                             <Moon className="h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 absolute" />
                         </button>
                     )}
-                    <button {...(resume.onClick && { onClick: resume.onClick })} className="glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium inter-font">{resume.label}</button>
+                    <button {...(resume?.onClick ? { onClick: resume.onClick } : {})} className="glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium inter-font">{resume.label}</button>
                 </div>
 
             </div>
@@ -280,9 +280,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
 
-                    <button onClick={ctaButtons.primary.onClick} className="primary-button px-6 py-3 text-foreground rounded-lg font-medium text-sm min-w-[160px]">{ctaButtons.primary.label}</button>
+                    <button {...(ctaButtons.primary?.onClick ? { onClick: ctaButtons.primary.onClick } : {})} className="primary-button px-6 py-3 text-foreground rounded-lg font-medium text-sm min-w-[160px]">{ctaButtons.primary.label}</button>
 
-                    <button onClick={ctaButtons.secondary.onClick} className="glass-button min-w-[160px] inter-font text-sm font-medium text-foreground rounded-lg px-6 py-3">{ctaButtons.secondary.label}</button>
+                    <button {...(ctaButtons.secondary?.onClick ? { onClick: ctaButtons.secondary.onClick } : {})} className="glass-button min-w-[160px] inter-font text-sm font-medium text-foreground rounded-lg px-6 py-3">{ctaButtons.secondary.label}</button>
 
                 </div>
 
