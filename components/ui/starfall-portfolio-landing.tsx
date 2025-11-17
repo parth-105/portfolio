@@ -251,7 +251,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                             <Moon className="h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 absolute" />
                         </button>
                     )}
-                    <button onClick={resume.onClick} className="glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium inter-font">{resume.label}</button>
+                    <button {...(resume.onClick && { onClick: resume.onClick })} className="glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium inter-font">{resume.label}</button>
                 </div>
 
             </div>
