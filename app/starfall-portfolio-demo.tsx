@@ -1,10 +1,7 @@
 "use client"
 
-import { useState } from 'react'
 import Image from 'next/image'
 import { PortfolioPage, PortfolioPageProps } from "@/components/ui/starfall-portfolio-landing";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 
 import CHAT from '@/app/Asets/CHAT.png'
 import LMS from '@/app/Asets/LMS.png'

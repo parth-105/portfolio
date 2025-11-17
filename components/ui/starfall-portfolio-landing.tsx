@@ -28,7 +28,7 @@ interface Certificate {
   date: string; 
   description: string; 
   image?: React.ReactNode;
-  imageSrc?: string | any;
+  imageSrc?: string | React.ComponentProps<typeof Image>['src'];
 }
 
 export interface PortfolioPageProps {
