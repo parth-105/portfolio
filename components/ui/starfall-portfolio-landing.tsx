@@ -164,7 +164,7 @@ const defaultData = {
 
   ctaButtons: { primary: { label: 'View My Work', onClick: undefined }, secondary: { label: 'Get In Touch', onClick: undefined }, },
 
-  projects: [ { title: 'FinTech Mobile App', description: 'React Native app with AI-powered financial insights.', tags: ['React Native', 'Node.js'] }, { title: 'Data Visualization Platform', description: 'Interactive dashboard for complex data analysis.', tags: ['D3.js', 'Python'] }, { title: '3D Portfolio Site', description: 'Immersive WebGL experience with 3D elements.', tags: ['Three.js', 'WebGL'] }, ],
+  projects: [ { title: 'FinTech Mobile App', description: 'React Native app with AI-powered financial insights.', tags: ['React Native', 'Node.js'], imageContent: undefined, link: undefined }, { title: 'Data Visualization Platform', description: 'Interactive dashboard for complex data analysis.', tags: ['D3.js', 'Python'], imageContent: undefined, link: undefined }, { title: '3D Portfolio Site', description: 'Immersive WebGL experience with 3D elements.', tags: ['Three.js', 'WebGL'], imageContent: undefined, link: undefined }, ],
 
   stats: [ { value: '50+', label: 'Projects Completed' }, { value: '5+', label: 'Years Experience' }, { value: '15+', label: 'Happy Clients' }, ],
 
@@ -294,7 +294,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                         const ProjectContent = () => (
                             <>
-                                <div className="project-image rounded-xl h-32 mb-4 flex items-center justify-center overflow-hidden bg-muted/5">{project.imageContent}</div>
+                                {project.imageContent && (
+                                    <div className="project-image rounded-xl h-32 mb-4 flex items-center justify-center overflow-hidden bg-muted/5">{project.imageContent}</div>
+                                )}
 
                                 <h3 className="text-lg font-medium text-card-foreground mb-2 geist-font">{project.title}</h3>
 

@@ -3,13 +3,6 @@
 import Image from 'next/image'
 import { PortfolioPage, PortfolioPageProps } from "@/components/ui/starfall-portfolio-landing";
 
-import CHAT from '@/app/Asets/CHAT.png'
-import LMS from '@/app/Asets/LMS.png'
-import RAG from '@/app/Asets/RAG.png'
-import LLM from '@/app/Asets/LLM.jpg'
-import AWS from '@/app/Asets/AWS.jpg'
-import NLP from '@/app/Asets/NLP.jpg'
-
 const customPortfolioData: PortfolioPageProps = {
   logo: {
     initials: 'PK',
@@ -66,7 +59,7 @@ const customPortfolioData: PortfolioPageProps = {
       link: 'https://chatpdf-one-ebon.vercel.app',
       imageContent: (
         <Image
-          src={RAG}
+          src="/RAG.png"
           alt="RAG App"
           width={300}
           height={200}
@@ -81,7 +74,7 @@ const customPortfolioData: PortfolioPageProps = {
       link: 'https://github.com/parth-105/e-lms',
       imageContent: (
         <Image
-          src={LMS}
+          src="/LMS.png"
           alt="LMS Platform"
           width={300}
           height={200}
@@ -96,7 +89,7 @@ const customPortfolioData: PortfolioPageProps = {
       link: 'https://github.com/parth-105/chates',
       imageContent: (
         <Image
-          src={CHAT}
+          src="/CHAT.png"
           alt="Chat App"
           width={300}
           height={200}
@@ -122,10 +115,10 @@ const customPortfolioData: PortfolioPageProps = {
       issuer: 'Google-Cloud',
       date: 'December 2024',
       description: 'Developing and integrating applications with Large Language Models (LLMs) and other enterprise services.',
-      imageSrc: LLM,
+      imageSrc: "/LLM.jpg",
       image: (
         <Image
-          src={LLM}
+          src="/LLM.jpg"
           alt="Large Language Models Certificate"
           width={300}
           height={200}
@@ -138,10 +131,10 @@ const customPortfolioData: PortfolioPageProps = {
       issuer: 'Amazon Web Services',
       date: 'January 2025',
       description: 'Expertise in essential of AWS services and common solutions.',
-      imageSrc: AWS,
+      imageSrc: "/AWS.jpg",
       image: (
         <Image
-          src={AWS}
+          src="/AWS.jpg"
           alt="AWS Certificate"
           width={300}
           height={200}
@@ -154,10 +147,10 @@ const customPortfolioData: PortfolioPageProps = {
       issuer: 'simplilearn',
       date: 'December 2024',
       description: 'Proficiency in building and training neural networks using NLP.',
-      imageSrc: NLP,
+      imageSrc: "/NLP.jpg",
       image: (
         <Image
-          src={NLP}
+          src="/NLP.jpg"
           alt="NLP Certificate"
           width={300}
           height={200}
