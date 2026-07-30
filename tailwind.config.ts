@@ -56,14 +56,23 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+        fontFamily: {
+            heading: ['var(--font-archivo)'],
+            body: ['var(--font-space-grotesk)'],
+        },
   		keyframes: {
   			float: {
   				'0%, 100%': { transform: 'translateY(0px)' },
   				'50%': { transform: 'translateY(-10px)' }
-  			}
+  			},
+            pulseRing: {
+                '0%': { transform: 'scale(0.8)', opacity: '0.5' },
+                '100%': { transform: 'scale(1.3)', opacity: '0' }
+            }
   		},
   		animation: {
-  			float: 'float 3s ease-in-out infinite'
+  			float: 'float 3s ease-in-out infinite',
+            'pulse-ring': 'pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
   		}
   	}
   },

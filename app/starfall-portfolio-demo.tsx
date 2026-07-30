@@ -53,6 +53,66 @@ const customPortfolioData: PortfolioPageProps = {
   },
   projects: [
     {
+      title: 'CalcBaba Automation Engine',
+      description: 'Developed a fully automated personal finance platform with 8 distinct AI-driven pipelines. Built an autonomous content engine using Groq\'s LLaMA 3.3 to draft, deploy, and index daily articles. Engineered a self-healing SEO system that pulls weekly Google Search Console metrics, uses the Tavily API for live financial rate research, and automatically patches TSX meta tags if CTR drops. Includes automated internal link meshing and PageSpeed monitoring.',
+      tags: ['Next.js', 'TypeScript', 'Python', 'LLaMA 3.3', 'SEO Automation'],
+      link: 'https://www.calcbaba.in',
+      imageContent: (
+        <Image
+          src="/calcbaba.png"
+          alt="CalcBaba Automation Engine"
+          width={300}
+          height={200}
+          className="rounded-xl object-cover w-full h-full"
+        />
+      ),
+    },
+    {
+      title: 'Virtual-Try-On-System',
+      description: 'Engineered an advanced Generative AI computer vision application that allows users to virtually try on clothing. Utilized HuggingFace Diffusers and Transformers to handle complex image synthesis and clothing warping. Built a robust image preprocessing pipeline with OpenCV and scikit-image, and served the model interactively using a Gradio web interface.',
+      tags: ['Python', 'Diffusers', 'Computer Vision', 'Generative AI', 'Gradio'],
+      link: 'https://github.com/parth-105/Virtual-Try-On-System',
+      imageContent: (
+        <Image
+          src="/virtual_try_on.png"
+          alt="Virtual Try-On System"
+          width={300}
+          height={200}
+          className="rounded-xl object-cover w-full h-full"
+        />
+      ),
+    },
+    {
+      title: 'Csv-Analytics-Agent',
+      description: 'Built a modern, highly responsive React frontend for an AI-powered CSV Analytics Agent. Utilized Vite for rapid build tooling and Tailwind CSS for a sleek, utility-first design. The interface allows users to upload datasets and interact with an AI agent to extract insights, visualize data, and generate analytical reports seamlessly.',
+      tags: ['TypeScript', 'React', 'Vite', 'Tailwind CSS', 'AI Agent'],
+      link: 'https://github.com/parth-105/Csv-Analytics-Agent',
+      imageContent: (
+        <Image
+          src="/csv_analytics.png"
+          alt="CSV Analytics Agent"
+          width={300}
+          height={200}
+          className="rounded-xl object-cover w-full h-full"
+        />
+      ),
+    },
+    {
+      title: 'Cotton-Leaf Disease Detection',
+      description: 'Developed an end-to-end Machine Learning solution to aid farmers in crop management. Trained a deep learning image classification model using TensorFlow and Keras to accurately detect various diseases from images of cotton leaves. Deployed the model via a Flask web application that cross-references a JSON database to recommend specific agricultural cures.',
+      tags: ['Python', 'TensorFlow', 'Flask', 'Machine Learning', 'Computer Vision'],
+      link: 'https://github.com/parth-105/Cotton-Leaf-Disease-Detection-Cure-Recommendation-System',
+      imageContent: (
+        <Image
+          src="/cotton_leaf.png"
+          alt="Cotton Leaf ML"
+          width={300}
+          height={200}
+          className="rounded-xl object-cover w-full h-full"
+        />
+      ),
+    },
+    {
       title: 'RAG App',
       description: 'Our RAG app leverages Gemini, FAISS, Python, and LangChain to deliver efficient, accurate, and contextually rich information retrieval and generation.',
       tags: ['Gemini', 'FAISS', 'Python', 'LangChain'],
@@ -96,18 +156,18 @@ const customPortfolioData: PortfolioPageProps = {
           className="rounded-xl object-cover w-full h-full"
         />
       ),
-    },
+    }
   ],
   stats: [
-    { value: '3+', label: 'Featured Projects' },
-    { value: '15+', label: 'Technologies' },
+    { value: '7+', label: 'Featured Projects' },
+    { value: '20+', label: 'Technologies' },
     { value: '3', label: 'Certifications' },
   ],
   skills: [
-    'Python', 'TensorFlow', 'PyTorch', 'Scikit-learn',
-    'JavaScript', 'TypeScript', 'React', 'Next.js', 'React Native',
-    'Node.js', 'Express', 'MongoDB', 'GraphQL',
-    'AWS', 'Git', 'SQL', 'Langchain'
+    'Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'OpenCV', 'Diffusers',
+    'JavaScript', 'TypeScript', 'React', 'Next.js', 'React Native', 'Vite', 'Tailwind CSS',
+    'Node.js', 'Express', 'Flask', 'MongoDB', 'GraphQL',
+    'AWS', 'Git', 'SQL', 'Langchain', 'LLaMA 3.3', 'Groq'
   ],
   certificates: [
     {

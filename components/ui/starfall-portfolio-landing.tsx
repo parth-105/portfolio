@@ -10,9 +10,56 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 
 import { Button } from "@/components/ui/button"
 
-import { Github, Linkedin, Mail, Moon, Sun } from 'lucide-react'
+import { Github, Linkedin, Mail, Moon, Sun, Menu, X } from 'lucide-react'
 
 import { useTheme } from "next-themes"
+import { motion } from "framer-motion"
+
+const TypewriterText = ({ text, className }: { text: string; className?: string }) => {
+  const characters = Array.from(text);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
+  };
+  const childVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 },
+  };
+  return (
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className={className}>
+      {characters.map((char, index) => (
+        <motion.span key={index} variants={childVariants} className="inline-block">
+          {char === " " ? "\u00A0" : char}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const MagneticButton = ({ children, className, onClick, href, target, rel, ...props }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const buttonRef = useRef<any>(null);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!buttonRef.current) return;
+    const rect = buttonRef.current.getBoundingClientRect();
+    buttonRef.current.style.setProperty('--x', `${e.clientX - rect.left}px`);
+    buttonRef.current.style.setProperty('--y', `${e.clientY - rect.top}px`);
+  };
+  const combinedClassName = `spotlight-button ${className || ''}`;
+  if (href) {
+    return (
+      <a ref={buttonRef} href={href} target={target} rel={rel} className={combinedClassName} onMouseMove={handleMouseMove} {...props}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <button ref={buttonRef} onClick={onClick} className={combinedClassName} onMouseMove={handleMouseMove} {...props}>
+      {children}
+    </button>
+  );
+};
 
 // --- TYPE DEFINITIONS FOR PROPS ---
 
@@ -201,6 +248,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
   const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -208,13 +256,13 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
   return (
 
-    <div className="bg-background text-foreground geist-font relative min-h-screen">
+    <div className="bg-background text-foreground font-heading relative min-h-screen">
 
       {showAnimatedBackground && <AuroraBackground />}
 
       <div className="relative z-10">
 
-        <nav className="w-full px-6 py-4">
+        <nav className="w-full px-6 py-4 sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
 
             <div className="max-w-7xl mx-auto flex justify-between items-center">
 
@@ -222,11 +270,11 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                     <div className="w-8 h-8 rounded-lg bg-border backdrop-blur-md border border-border flex items-center justify-center">
 
-                        <span className="geist-font text-sm font-bold text-foreground">{logo.initials}</span>
+                        <span className="font-heading text-sm font-bold text-foreground">{logo.initials}</span>
 
                     </div>
 
-                    <span className="geist-font text-lg font-medium text-foreground">{logo.name}</span>
+                    <span className="font-heading text-lg font-medium text-foreground">{logo.name}</span>
 
                 </div>
 
@@ -234,7 +282,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                     {navLinks.map(link => (
 
-                        <a key={link.label} href={link.href} className="text-muted-foreground hover:text-foreground transition-colors inter-font text-sm">{link.label}</a>
+                        <a key={link.label} href={link.href} className="text-muted-foreground hover:text-foreground transition-colors font-body text-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm px-2 py-1">{link.label}</a>
 
                     ))}
 
@@ -242,53 +290,94 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                 <div className="flex items-center gap-3">
                     {mounted && setTheme && (
-                        <button
+                        <MagneticButton
                             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                            className="glass-button p-2 rounded-lg text-foreground transition-all duration-300 hover:scale-110 relative w-9 h-9 flex items-center justify-center"
+                            className="glass-button p-2 rounded-lg text-foreground transition-all duration-300 hover:scale-110 relative w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                             aria-label="Toggle theme"
                         >
-                            <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 absolute" />
-                            <Moon className="h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 absolute" />
-                        </button>
+                            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 absolute" />
+                            <Moon className="h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 absolute" />
+                        </MagneticButton>
                     )}
-                    <button {...(resume?.onClick ? { onClick: resume.onClick } : {})} className="glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium inter-font">{resume.label}</button>
+                    <MagneticButton {...(resume?.onClick ? { onClick: resume.onClick } : {})} className="hidden md:block glass-button px-4 py-2 rounded-lg text-foreground text-sm font-medium font-body min-h-[44px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">{resume.label}</MagneticButton>
+                    
+                    {/* Mobile Menu Toggle */}
+                    <MagneticButton 
+                        className="md:hidden glass-button p-2 rounded-lg text-foreground w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </MagneticButton>
                 </div>
 
             </div>
+            
+            {/* Mobile Dropdown Menu */}
+            {isMobileMenuOpen && (
+                <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-b border-border/50 py-4 px-6 flex flex-col space-y-4 shadow-xl">
+                    {navLinks.map(link => (
+                        <a 
+                            key={link.label} 
+                            href={link.href} 
+                            className="text-foreground hover:text-primary transition-colors font-body text-lg py-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-sm"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                            {link.label}
+                        </a>
+                    ))}
+                    <button {...(resume?.onClick ? { onClick: resume.onClick } : {})} className="primary-button px-4 py-3 rounded-lg text-foreground text-sm font-medium font-body min-h-[44px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none w-full text-center">
+                        {resume.label}
+                    </button>
+                </div>
+            )}
 
         </nav>
 
         <div className="divider" />
 
-        <main id="about" className="w-full min-h-screen flex flex-col items-center justify-center px-6 py-20">
+        <main id="about" className="w-full min-h-screen flex flex-col items-center justify-center px-6 py-20 scroll-mt-24">
 
             <div className="max-w-6xl mx-auto text-center">
 
                 <div className="mb-8 float-animation">
 
-                    <h1 className="md:text-6xl lg:text-7xl leading-[1.1] geist-font text-5xl font-light text-foreground tracking-tight mb-4">
+                    <h1 className="md:text-6xl lg:text-7xl leading-[1.1] font-heading text-5xl font-light text-foreground tracking-tight mb-4 flex flex-col items-center justify-center">
 
-                        {hero.titleLine1}
+                        <TypewriterText text={hero.titleLine1 as string || ""} />
 
                         <span className="gradient-text block tracking-tight">{hero.titleLine2Gradient}</span>
 
                     </h1>
 
-                    <p className="md:text-xl max-w-3xl leading-relaxed inter-font text-lg font-light text-muted-foreground mx-auto">{hero.subtitle}</p>
+                    <p className="md:text-xl max-w-3xl leading-relaxed font-body text-lg font-light text-muted-foreground mx-auto">{hero.subtitle}</p>
 
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
 
-                    <button {...(ctaButtons.primary?.onClick ? { onClick: ctaButtons.primary.onClick } : {})} className="primary-button px-6 py-3 text-foreground rounded-lg font-medium text-sm min-w-[160px]">{ctaButtons.primary.label}</button>
+                    <MagneticButton {...(ctaButtons.primary?.onClick ? { onClick: ctaButtons.primary.onClick } : {})} className="primary-button px-6 py-3 text-foreground rounded-lg font-medium text-sm min-w-[160px] min-h-[44px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">{ctaButtons.primary.label}</MagneticButton>
 
-                    <button {...(ctaButtons.secondary?.onClick ? { onClick: ctaButtons.secondary.onClick } : {})} className="glass-button min-w-[160px] inter-font text-sm font-medium text-foreground rounded-lg px-6 py-3">{ctaButtons.secondary.label}</button>
+                    <MagneticButton {...(ctaButtons.secondary?.onClick ? { onClick: ctaButtons.secondary.onClick } : {})} className="glass-button min-w-[160px] font-body text-sm font-medium text-foreground rounded-lg px-6 py-3 min-h-[44px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none">{ctaButtons.secondary.label}</MagneticButton>
 
                 </div>
 
                 <div className="divider mb-16" />
 
-                <div id="projects" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: { staggerChildren: 0.1 }
+                        }
+                    }}
+                    id="projects" 
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16 scroll-mt-24"
+                >
 
                     {projects.map((project, index) => {
 
@@ -298,9 +387,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                                     <div className="project-image rounded-xl h-32 mb-4 flex items-center justify-center overflow-hidden bg-muted/5">{project.imageContent}</div>
                                 )}
 
-                                <h3 className="text-lg font-medium text-card-foreground mb-2 geist-font">{project.title}</h3>
+                                <h3 className="text-lg font-medium text-card-foreground mb-2 font-heading">{project.title}</h3>
 
-                                <p className="text-muted-foreground text-sm inter-font mb-4">{project.description}</p>
+                                <p className="text-muted-foreground text-sm font-body mb-4">{project.description}</p>
 
                                 <div className="flex flex-wrap gap-2">
 
@@ -314,28 +403,43 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                             </>
                         );
 
-                        return project.link ? (
-                            <a
+                        return (
+                            <motion.div
                                 key={index}
-                                href={project.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="glass-card rounded-2xl p-6 text-left cursor-pointer hover:scale-105 transition-transform block"
+                                variants={{
+                                    hidden: { opacity: 0, y: 30 },
+                                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                                }}
                             >
-                                <ProjectContent />
-                            </a>
-                        ) : (
-                            <div key={index} className="glass-card rounded-2xl p-6 text-left">
-                                <ProjectContent />
-                            </div>
+                                {project.link ? (
+                                    <a
+                                        href={project.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="glass-card rounded-2xl p-6 text-left cursor-pointer hover:scale-105 transition-transform block focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                                    >
+                                        <ProjectContent />
+                                    </a>
+                                ) : (
+                                    <div className="glass-card rounded-2xl p-6 text-left">
+                                        <ProjectContent />
+                                    </div>
+                                )}
+                            </motion.div>
                         );
                     })}
 
-                </div>
+                </motion.div>
 
                 <div className="divider mb-16" />
 
-                <div id="stats" className="flex flex-col sm:flex-row justify-center items-center gap-8 text-center mb-16">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    id="stats" className="flex flex-col sm:flex-row justify-center items-center gap-8 text-center mb-16 scroll-mt-24"
+                >
 
                     {stats.map((stat, index) => (
 
@@ -343,9 +447,9 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                             <div>
 
-                                <div className="text-3xl md:text-4xl font-light text-foreground mb-1 geist-font tracking-tight">{stat.value}</div>
+                                <div className="text-3xl md:text-4xl font-light text-foreground mb-1 font-heading tracking-tight">{stat.value}</div>
 
-                                <div className="text-muted-foreground text-sm inter-font font-normal">{stat.label}</div>
+                                <div className="text-muted-foreground text-sm font-body font-normal">{stat.label}</div>
 
                             </div>
 
@@ -355,51 +459,65 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                     ))}
 
-                </div>
+                </motion.div>
 
                 {skills.length > 0 && (
                     <>
                         <div className="divider mb-16" />
-                        <div id="skills" className="w-full mb-16">
-                            <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 geist-font text-center tracking-tight">Skills & Technologies</h2>
+                        <motion.div 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.05 } } }}
+                            id="skills" className="w-full mb-16 scroll-mt-24"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 font-heading text-center tracking-tight">Skills & Technologies</h2>
                             <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
                                 {skills.filter(skill => skill && skill.trim()).map((skill, index) => (
-                                    <span 
+                                    <motion.span 
+                                        variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
                                         key={index} 
-                                        className="skill-badge px-4 py-2 rounded-lg text-sm font-medium text-foreground inter-font cursor-default"
+                                        className="skill-badge px-4 py-2 rounded-lg text-sm font-medium text-foreground font-body cursor-default"
                                     >
                                         {skill}
-                                    </span>
+                                    </motion.span>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </>
                 )}
 
                 {certificates.length > 0 && (
                     <>
                         <div className="divider mb-16" />
-                        <div id="certificates" className="w-full mb-16">
-                            <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 geist-font text-center tracking-tight">Certificates</h2>
+                        <motion.div 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+                            id="certificates" className="w-full mb-16 scroll-mt-24"
+                        >
+                            <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 font-heading text-center tracking-tight">Certificates</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                                 {certificates.map((cert, index) => (
-                                    <div 
+                                    <motion.div 
+                                        variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } } }}
                                         key={index} 
                                         onClick={() => setSelectedCertificate(cert)}
-                                        className="glass-card rounded-2xl p-6 text-left cursor-pointer hover:scale-105 transition-transform"
+                                        className="glass-card rounded-2xl p-6 text-left cursor-pointer hover:scale-105 transition-transform focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                                     >
                                         {cert.image && (
                                             <div className="rounded-xl h-32 mb-4 flex items-center justify-center overflow-hidden">
                                                 {cert.image}
                                             </div>
                                         )}
-                                        <h3 className="text-lg font-medium text-card-foreground mb-2 geist-font">{cert.title}</h3>
-                                        <p className="text-muted-foreground text-xs inter-font mb-2">{cert.issuer} - {cert.date}</p>
-                                        <p className="text-muted-foreground text-sm inter-font">{cert.description}</p>
-                                    </div>
+                                        <h3 className="text-lg font-medium text-card-foreground mb-2 font-heading">{cert.title}</h3>
+                                        <p className="text-muted-foreground text-xs font-body mb-2">{cert.issuer} - {cert.date}</p>
+                                        <p className="text-muted-foreground text-sm font-body">{cert.description}</p>
+                                    </motion.div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     </>
                 )}
 
@@ -413,8 +531,8 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
       <Dialog open={selectedCertificate !== null} onOpenChange={() => setSelectedCertificate(null)}>
         <DialogContent className="max-w-4xl glass-dialog">
           <DialogHeader>
-            <DialogTitle className="geist-font text-2xl">{selectedCertificate?.title}</DialogTitle>
-            <DialogDescription className="inter-font">
+            <DialogTitle className="font-heading text-2xl">{selectedCertificate?.title}</DialogTitle>
+            <DialogDescription className="font-body">
               {selectedCertificate?.issuer} - {selectedCertificate?.date}
             </DialogDescription>
             <Button
@@ -462,7 +580,7 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                   </div>
                 </div>
               )}
-              <p className="text-muted-foreground inter-font text-sm">{selectedCertificate.description}</p>
+              <p className="text-muted-foreground font-body text-sm">{selectedCertificate.description}</p>
             </div>
           )}
         </DialogContent>
@@ -476,40 +594,40 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
               {footer.socialLinks && (footer.socialLinks.github || footer.socialLinks.linkedin || footer.socialLinks.email) && (
                 <div className="flex space-x-4">
                   {footer.socialLinks.github && (
-                    <a
-                      href={footer.socialLinks.github}
+                    <MagneticButton
+                      href={`https://github.com/${footer.socialLinks.github}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="GitHub"
-                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform"
+                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                     >
                       <Github className="h-5 w-5 text-foreground" />
-                    </a>
+                    </MagneticButton>
                   )}
                   {footer.socialLinks.linkedin && (
-                    <a
-                      href={footer.socialLinks.linkedin}
+                    <MagneticButton
+                      href={`https://linkedin.com/in/${footer.socialLinks.linkedin}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label="LinkedIn"
-                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform"
+                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                     >
                       <Linkedin className="h-5 w-5 text-foreground" />
-                    </a>
+                    </MagneticButton>
                   )}
                   {footer.socialLinks.email && (
-                    <a
+                    <MagneticButton
                       href={`mailto:${footer.socialLinks.email}`}
                       aria-label="Email"
-                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform"
+                      className="glass-button p-3 rounded-lg hover:scale-110 transition-transform min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                     >
                       <Mail className="h-5 w-5 text-foreground" />
-                    </a>
+                    </MagneticButton>
                   )}
                 </div>
               )}
               {footer.copyright && (
-                <p className="text-muted-foreground text-sm inter-font text-center">
+                <p className="text-muted-foreground text-sm font-body text-center">
                   {footer.copyright}
                 </p>
               )}
