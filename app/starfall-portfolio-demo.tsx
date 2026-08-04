@@ -35,7 +35,31 @@ const customPortfolioData: PortfolioPageProps = {
   hero: {
     titleLine1: 'AI/ML & Full Stack',
     titleLine2Gradient: 'Developer',
-    subtitle: 'Crafting intelligent solutions with MERN stack, React Native, and cutting-edge AI/ML technologies. Specializing in building scalable web applications and integrating machine learning models into production environments.',
+    subtitle: (
+      <>
+        Crafting intelligent solutions with{' '}
+        <span className="font-semibold text-primary dark:text-cyan-300 bg-primary/10 dark:bg-cyan-500/15 border border-primary/30 dark:border-cyan-400/30 px-2 py-0.5 rounded-md shadow-[0_0_12px_rgba(59,130,246,0.25)] inline-block my-0.5">
+          MERN stack
+        </span>
+        ,{' '}
+        <span className="font-semibold text-primary dark:text-cyan-300 bg-primary/10 dark:bg-cyan-500/15 border border-primary/30 dark:border-cyan-400/30 px-2 py-0.5 rounded-md shadow-[0_0_12px_rgba(59,130,246,0.25)] inline-block my-0.5">
+          React Native
+        </span>
+        , and cutting-edge{' '}
+        <span className="font-semibold text-primary dark:text-cyan-300 bg-primary/10 dark:bg-cyan-500/15 border border-primary/30 dark:border-cyan-400/30 px-2 py-0.5 rounded-md shadow-[0_0_12px_rgba(59,130,246,0.25)] inline-block my-0.5">
+          AI/ML technologies
+        </span>
+        . Specializing in building{' '}
+        <span className="font-medium text-foreground underline decoration-primary/50 underline-offset-4">
+          scalable web applications
+        </span>{' '}
+        and integrating{' '}
+        <span className="font-medium text-foreground underline decoration-primary/50 underline-offset-4">
+          machine learning models
+        </span>{' '}
+        into production environments.
+      </>
+    ),
   },
   ctaButtons: {
     primary: {
@@ -164,8 +188,8 @@ const customPortfolioData: PortfolioPageProps = {
     { value: '3', label: 'Certifications' },
   ],
   skills: [
-    'Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'OpenCV', 'Diffusers',
-    'JavaScript', 'TypeScript', 'React', 'Next.js', 'React Native', 'Vite', 'Tailwind CSS',
+    'MERN stack', 'React Native', 'AI/ML', 'Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'OpenCV', 'Diffusers',
+    'JavaScript', 'TypeScript', 'React', 'Next.js', 'Vite', 'Tailwind CSS',
     'Node.js', 'Express', 'Flask', 'MongoDB', 'GraphQL',
     'AWS', 'Git', 'SQL', 'Langchain', 'LLaMA 3.3', 'Groq'
   ],

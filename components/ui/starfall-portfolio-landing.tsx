@@ -26,7 +26,7 @@ const TypewriterText = ({ text, className }: { text: string; className?: string 
     visible: { opacity: 1, y: 0 },
   };
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className={className}>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible" className={`whitespace-nowrap ${className || ''}`}>
       {characters.map((char, index) => (
         <motion.span key={index} variants={childVariants} className="inline-block">
           {char === " " ? "\u00A0" : char}
@@ -342,11 +342,17 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
 
                 <div className="mb-8 float-animation">
 
-                    <h1 className="md:text-6xl lg:text-7xl leading-[1.1] font-heading text-5xl font-light text-foreground tracking-tight mb-4 flex flex-col items-center justify-center">
+                    <h1 className="text-[1.65rem] xs:text-[2.2rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] font-heading font-light text-foreground tracking-tight mb-4 flex flex-col items-center justify-center w-full">
 
-                        <TypewriterText text={hero.titleLine1 as string || ""} />
+                        <div className="whitespace-nowrap max-w-full">
+                            {typeof hero.titleLine1 === 'string' ? (
+                                <TypewriterText text={hero.titleLine1} className="whitespace-nowrap inline-block" />
+                            ) : (
+                                hero.titleLine1
+                            )}
+                        </div>
 
-                        <span className="gradient-text block tracking-tight">{hero.titleLine2Gradient}</span>
+                        <span className="gradient-text block tracking-tight whitespace-nowrap">{hero.titleLine2Gradient}</span>
 
                     </h1>
 
@@ -473,15 +479,24 @@ const PortfolioPage: React.FC<PortfolioPageProps> = ({
                         >
                             <h2 className="text-3xl md:text-4xl font-light text-foreground mb-8 font-heading text-center tracking-tight">Skills & Technologies</h2>
                             <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-                                {skills.filter(skill => skill && skill.trim()).map((skill, index) => (
-                                    <motion.span 
-                                        variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
-                                        key={index} 
-                                        className="skill-badge px-4 py-2 rounded-lg text-sm font-medium text-foreground font-body cursor-default"
-                                    >
-                                        {skill}
-                                    </motion.span>
-                                ))}
+                                {skills.filter(skill => skill && skill.trim()).map((skill, index) => {
+                                    const isHrHighlight = ['MERN stack', 'React Native', 'AI/ML', 'Next.js', 'Python', 'TypeScript', 'Node.js', 'TensorFlow', 'LLaMA 3.3'].some(
+                                        high => skill.toLowerCase().includes(high.toLowerCase())
+                                    );
+                                    return (
+                                        <motion.span 
+                                            variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
+                                            key={index} 
+                                            className={`skill-badge px-4 py-2 rounded-lg text-sm font-medium font-body cursor-default transition-all duration-300 ${
+                                                isHrHighlight 
+                                                ? 'bg-primary/20 text-primary border border-primary/50 shadow-[0_0_15px_rgba(59,130,246,0.35)] dark:shadow-[0_0_15px_rgba(56,189,248,0.35)] font-semibold ring-1 ring-primary/30' 
+                                                : 'text-foreground'
+                                            }`}
+                                        >
+                                            {skill}
+                                        </motion.span>
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     </>
